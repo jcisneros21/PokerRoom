@@ -15,6 +15,27 @@ TO-DO/IN-PROGRESS
 
 5 - QQ - Add a "burn" animation to the first, fifth, and seventh cards drawn from the deck of the commmunity cards 
 
+1 - Need to implement the raise button
+
+1 - Need to implement the call button
+ 
+1 - Need to implement the fold button
+
+2 - Once a round is done need to show the ready button again.
+
+1 - Once a user has left the game, their information and cards should be left from the game. When reloading a page, the user should also be taken away.
+
+1 - user needs to get drunk all the time.
 
 COMPLETED
 1 - JG - Set up server-client connection
+1 - JC - Rotation of all user cards except back player
+1 - JC - Allow actions once all players figure out there 
+
+
+ISSUES
+- One of the users signal’s doesn’t move. The source is in table.js and is due from the modulo also coming out 0 for that user. Need to figure out how to fix that.
+
+- A user needs to press a button at least 2 to 3 times for a action to be over and the next action to begin. Try to find a way to only allow rounds for the number of players only.
+
+- If I reload the page, 
