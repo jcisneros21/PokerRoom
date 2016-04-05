@@ -142,13 +142,25 @@ function game_init() {
 
 	// Changes the pace of the Tickers
 	createjs.Ticker.timingMode = createjs.Ticker.RAF;
-	createjs.Ticker.setFPS(40);
+	createjs.Ticker.setFPS(60);
+	
+	/*$.ajax({  
+    type: 'POST',  
+    url: '../php/holdemRooms.php', 
+    data: { "username": "amount" },
+    success: function( response ) {
+       console.log( response );
+    }
+ });*/
 
 	// Assigns the information for the client
 	currentPlayer = new Player();
-	currentPlayer.setUsername("testUser" + Math.floor((Math.random() * 100) + 1));
-	currentPlayer.setPassword("testPassword" + Math.floor((Math.random() * 10) + 1));
-	currentPlayer.addChips(Math.floor((Math.random() * 10000) + 1));
+	//currentPlayer.setUsername("testUser" + Math.floor((Math.random() * 100) + 1));
+	//currentPlayer.setPassword("testPassword" + Math.floor((Math.random() * 10) + 1));
+	//currentPlayer.addChips(Math.floor((Math.random() * 10000) + 1));
+	var myPhpValue = $("#myPhpValue").val();
+	
+	currentPlayer.setUsername(myPhpValue);
 
   // The menu automatically starts
   menu();
@@ -498,6 +510,7 @@ function lobby() {
    socket.emit("new player", {username: currentPlayer.getUsername(), chips: currentPlayer.getChips()});
 
    // All background for the lobby
+   //pokerChip(490, 398);
    pokertable();
    paint_deck();
    optionsButton();
@@ -787,8 +800,11 @@ function clientAmounts(player, username, amount) {
 		    }
 			chip_plate_background.graphics.beginFill("black").drawRect(30,380,88,17);
 
-		    chip_background.graphics.beginFill("gold").drawCircle(20,390,15);
-		    chip_background.graphics.beginFill("blue").drawCircle(20,390,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(20,390,15);
+		    chip_background.graphics.beginFill("white").drawCircle(20,390,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(20,390,9);
+		    chip_background.graphics.beginFill("blue").drawPolyStar(20,390,15,8,0.5,90);
+		    chip_background.graphics.beginFill("white").drawCircle(20,390,2);
 
 		    user_amount.x = 40;
 		    user_amount.y = 380;
@@ -803,8 +819,11 @@ function clientAmounts(player, username, amount) {
 		    }
 			chip_plate_background.graphics.beginFill("black").drawRect(625,380,88,17);
 
-		    chip_background.graphics.beginFill("gold").drawCircle(615,390,15);
-		    chip_background.graphics.beginFill("blue").drawCircle(615,390,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(615,390,15);
+		    chip_background.graphics.beginFill("white").drawCircle(615,390,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(615,390,9);
+		    chip_background.graphics.beginFill("blue").drawPolyStar(615,390,15,8,0.5,90);
+		    chip_background.graphics.beginFill("white").drawCircle(615,390,2);
 
 		    user_amount.x = 635;
 		    user_amount.y = 380;
@@ -819,8 +838,11 @@ function clientAmounts(player, username, amount) {
 		    }
 			chip_plate_background.graphics.beginFill("black").drawRect(326,175,88,17);
 
-		    chip_background.graphics.beginFill("gold").drawCircle(316,187,15);
-		    chip_background.graphics.beginFill("blue").drawCircle(316,187,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(316,187,15);
+		    chip_background.graphics.beginFill("white").drawCircle(431,187,12);
+		    chip_background.graphics.beginFill("blue").drawCircle(316,187,9);
+		    chip_background.graphics.beginFill("blue").drawPolyStar(316,187,15,8,0.5,90);
+		    chip_background.graphics.beginFill("white").drawCircle(316,187,2);
 
 		    user_amount.x = 335;
 		    user_amount.y = 175;
@@ -1189,3 +1211,57 @@ function playerAction(data) {
 	stage.addChild(text);
 	stage.update();
 }
+/*
+function displayWinner(data) {
+	var display;
+	// Removes the current amount
+	if (display = stage.getChildByName("winner")) {
+		stage.removeChild(display);
+	}
+    
+	
+	var winner = new createjs.Text(data.username + " Won!", "20px Bembo", "#FFFF00");
+	winner.x = 350;
+	winner.y = 385;
+	winner.name = "winner";
+	stage.addChild(winner);
+	stage.update();
+}
+*/
+//Countdown timer used to detect AFK players
+/*
+function getTimeRemaining(endtime) {
+  var t = Date.parse(endtime) - Date.parse(new Date());
+  var seconds = Math.floor((t / 1000) % 60);
+  var minutes = Math.floor((t / 1000 / 60) % 60);
+  
+  return {
+    'total': t,
+    'minutes': minutes,
+    'seconds': seconds
+  };
+}
+
+function initializeClock(id, endtime) {
+  var clock = document.getElementById(id);
+  var minutesSpan = clock.querySelector('.minutes');
+  var secondsSpan = clock.querySelector('.seconds');
+
+  function updateClock() {
+    var t = getTimeRemaining(endtime);
+
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+    if (t.total <= 0) {
+      clearInterval(timeinterval);
+    }
+  }
+
+  updateClock();
+  var timeinterval = setInterval(updateClock, 1000);
+}
+
+var deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+initializeClock('clockdiv', deadline);
+*/
